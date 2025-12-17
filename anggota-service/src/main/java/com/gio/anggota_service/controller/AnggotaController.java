@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,6 +37,12 @@ public class AnggotaController {
   @PostMapping
   public Anggota createAnggota(@RequestBody Anggota anggota){
     return anggotaService.createAnggota(anggota);
+  }
+
+  @PutMapping("/{id}")
+  public ResponseEntity<Anggota> updateAnggota(@PathVariable Long id, @RequestBody Anggota anggotaDetails){
+    Anggota updatedAnggota = anggotaService.updateAnggota(id, anggotaDetails);
+    return updatedAnggota != null ? ResponseEntity.ok(updatedAnggota) : ResponseEntity.notFound().build();
   }
 
   @DeleteMapping("/{id}")
