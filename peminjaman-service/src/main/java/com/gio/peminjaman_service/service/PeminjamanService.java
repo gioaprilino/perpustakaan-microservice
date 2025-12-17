@@ -2,6 +2,7 @@ package com.gio.peminjaman_service.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
@@ -84,6 +85,27 @@ public class PeminjamanService {
     // log.info("📩 Message sent to exchange [{}] with routing key [{}], Payload: {}", 
     //             exchange, routingKey, savedPeminjaman);
     return savedPeminjaman;
+  }
+
+    public Peminjaman updatePeminjaman(Long id, Peminjaman peminjamanDetails){
+    return peminjamanRepository.findById(id)
+      .map(peminjaman -> {
+        // Update hanya field yang tidak null
+        if (peminjamanDetails.getTanggalPinjam() != null) {
+          peminjaman.setTanggalPinjam(peminjamanDetails.getTanggalPinjam());
+        }
+        if (peminjamanDetails.getTanggalKembali() != null) {
+          peminjaman.setTanggalKembali(peminjamanDetails.getTanggalKembali());
+        }
+        if (peminjamanDetails.getAnggotaId() != null) {
+          peminjaman.setAnggotaId(peminjamanDetails.getAnggotaId());
+        }
+        if (peminjamanDetails.getBukuId() != null) {
+          peminjaman.setBukuId(peminjamanDetails.getBukuId());
+        }
+        return peminjamanRepository.save(peminjaman);
+      })
+      .orElse(null);
   }
 
   public void deletePeminjaman(Long id){
