@@ -8,32 +8,33 @@ spring:
     name: api-gateway-pustaka
   cloud:
     gateway:
-      mvc:
-        routes:
-          - id: anggota-service
-            uri: lb://ANGGOTA-SERVICE
-            predicates:
-              - Path=/api/anggota/**
-          - id: buku-service
-            uri: lb://BUKU-SERVICE
-            predicates:
-              - Path=/api/buku/**
-          - id: peminjaman-command-service
-            uri: lb://PEMINJAMAN-COMMAND-SERVICE
-            predicates:
-              - Path=/api/peminjaman/command/**
-          - id: peminjaman-query-service
-            uri: lb://PEMINJAMAN-QUERY-SERVICE
-            predicates:
-              - Path=/api/peminjaman/query/**
-          - id: pengembalian-service
-            uri: lb://PENGEMBALIAN-SERVICE
-            predicates:
-              - Path=/api/pengembalian/**
-          - id: peminjaman-service
-            uri: lb://PEMINJAMAN-SERVICE
-            predicates:
-              - Path=/api/peminjaman/**
+      server:
+        webmvc:
+          routes:
+            - id: anggota-service
+              uri: lb://ANGGOTA-SERVICE
+              predicates:
+                - Path=/api/anggota/**
+            - id: buku-service
+              uri: lb://BUKU-SERVICE
+              predicates:
+                - Path=/api/buku/**
+            - id: peminjaman-command-service
+              uri: lb://PEMINJAMAN-COMMAND-SERVICE
+              predicates:
+                - Path=/api/peminjaman/command/**
+            - id: peminjaman-query-service
+              uri: lb://PEMINJAMAN-QUERY-SERVICE
+              predicates:
+                - Path=/api/peminjaman/query/**
+            - id: pengembalian-service
+              uri: lb://PENGEMBALIAN-SERVICE
+              predicates:
+                - Path=/api/pengembalian/**
+            - id: peminjaman-service
+              uri: lb://PEMINJAMAN-SERVICE
+              predicates:
+                - Path=/api/peminjaman/**
 
 
 eureka:
@@ -44,3 +45,12 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     hostname: localhost
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always    
